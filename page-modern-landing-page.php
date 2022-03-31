@@ -40,7 +40,7 @@ get_header();
             <div class="search-wrapper row w-75">
                 <?php if(have_rows('hero_search_field')): ?>
                     <?php while( have_rows('hero_search_field')) : the_row(); ?>
-                        <div class="col-12 col-lg-col col-xl-2">
+                        <div class="col-12 col-lg-col <?php the_sub_field('search_field_class'); ?>">
                             <div class="input-group flex-wrap">
                                 <label class="hero-sml-gray-txt input-group-text w-100 bg-transparent border-0" id="addon-wrapping"><?php the_sub_field('search_field_label'); ?></label>
                                 <input 

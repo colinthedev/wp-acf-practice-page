@@ -156,7 +156,7 @@ function colinfeb2022_scripts() {
 		wp_enqueue_style( 'google-fonts-css', 'https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i' );
 	}
 
-	if ( is_page('Modern Landing Page') ) {
+	if ( is_page(371) ) {
 		wp_enqueue_style( 'modern-style', '/wp-content/themes/wp-acf-practice-page/css/modern.css' );
 	}
 
