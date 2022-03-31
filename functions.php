@@ -141,7 +141,6 @@ add_action( 'widgets_init', 'colinfeb2022_widgets_init' );
  */
 function colinfeb2022_scripts() {
 
-	wp_enqueue_style( 'google-fonts-css', 'https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i' );
 	wp_enqueue_style( 'aos-css', '/wp-content/themes/wp-acf-practice-page/vendor/aos/aos.css' );
 	wp_enqueue_style( 'bootstrap-css', '/wp-content/themes/wp-acf-practice-page/vendor/bootstrap/css/bootstrap.min.css' );
 	wp_enqueue_style( 'aicons', '/wp-content/themes/wp-acf-practice-page/vendor/bootstrap-icons/bootstrap-icons.css' );
@@ -150,7 +149,16 @@ function colinfeb2022_scripts() {
 	wp_enqueue_style( 'remixicon', '/wp-content/themes/wp-acf-practice-page/vendor/remixicon/remixicon.css' );
 	wp_enqueue_style( 'swiper', '/wp-content/themes/wp-acf-practice-page/vendor/swiper/swiper-bundle.min.css' );
 
-	wp_enqueue_style( 'arsha-style', '/wp-content/themes/wp-acf-practice-page/css/style.css' );
+	wp_enqueue_style( 'general-style', '/wp-content/themes/wp-acf-practice-page/css/general.css' );
+
+	if ( is_page('Arsha') ) {
+		wp_enqueue_style( 'arsha-style', '/wp-content/themes/wp-acf-practice-page/css/arsha.css' );
+		wp_enqueue_style( 'google-fonts-css', 'https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i' );
+	}
+
+	if ( is_page('Modern Landing Page') ) {
+		wp_enqueue_style( 'modern-style', '/wp-content/themes/wp-acf-practice-page/css/modern.css' );
+	}
 
 	wp_enqueue_script( 'aosjs', '/wp-content/themes/wp-acf-practice-page/vendor/aos/aos.js', array(), '0.0.0', true);
 	wp_enqueue_script( 'bootstrapjs', '/wp-content/themes/wp-acf-practice-page/vendor/bootstrap/js/bootstrap.bundle.min.js', array(), '0.0.0', true);

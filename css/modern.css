@@ -1,0 +1,538 @@
+
+
+/* Modern Landing Page */
+
+/* 
+font-family: 'Assistant', sans-serif;
+font-family: 'Playfair Display', serif; 
+*/
+
+/* 
+heading 40px
+subheading 16px */
+
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap');
+
+body, main {
+  overflow-x: hidden;
+}
+
+button:focus {
+  outline: 5px auto #2289FF;  
+}
+
+.txt-blue {
+  color: #2289FF;
+}
+
+.txt-dark-blue {
+    color: #14395B !important;
+}
+
+
+/* HERO SECTION */
+.container-xl {
+  overflow: hidden;
+}
+
+.bg-image {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.171),rgba(0, 0, 0, 0.123)) , url('assets/hero-img.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  object-fit: cover;
+  border-radius: 25px;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 635px;
+  z-index: -1;
+}
+
+.heading-wrapper {
+  background-color: #fff;
+  filter: drop-shadow(0px 1px 6px rgba(0, 0, 0, 0.27));
+  border: 1px solid #fff;
+  border-radius: 40px;
+  padding: 0px 10px;
+  max-width: 550px;
+}
+
+.heading-wrapper__title {
+  font-family: 'Playfair Display', serif; 
+  font-size: 40px;
+  font-weight: 700;
+  color: #186AA5;
+}
+
+.heading-wrapper__description {
+  font-family: 'Playfair Display', serif; 
+  font-size: 16px;
+  font-weight: 400;
+  color: #303030;
+  max-width: 350px;
+}
+
+.search-wrapper {
+  background-color: #fff;
+  filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.16));
+  border-radius: 5px;
+  padding: 8px 4px;
+  max-width: 1500px;
+}
+
+.hero-sml-gray-txt {
+  font-family: 'Assistant', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.15px;
+  color: #8D9598;
+}
+
+.hero-sml-blue-txt {
+  font-family: 'Assistant', sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #068cec !important;
+}
+
+.hero-btn-buy {
+  font-family: 'Assistant', sans-serif;
+  font-weight: 700;
+  border-radius: 12.5px;
+  padding: 4px 15px;
+}
+
+.hero-btn-sell-rent {
+  font-family: 'Assistant', sans-serif;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.hero-search-btn {
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px;
+  padding: 10px 45px;
+}
+
+@media only screen and (min-width: 768px) {
+  .bg-image {
+      background-image: url('assets/hero-img.jpg');
+      height: 550px;        
+      width: 76vw;
+      right: 15px;
+  }
+
+  .heading-wrapper {
+      padding: 0px 20px;
+      margin-left: -3rem;
+      padding-left: 3rem;
+  }
+
+  .heading-wrapper__title {
+      font-size: 65px;
+  }
+  
+  .heading-wrapper__description {
+      font-size: 18px;
+  }
+
+  .hero-btn-sell-rent {
+      color: #303030;
+  }
+}
+
+
+/* ROW - 2 Apartment Select */
+.top-txt__heading {
+  font-family: 'Playfair Display', serif; 
+  font-size: 40px;
+  font-weight: 700;
+  color: #14395B;
+}
+
+.top-txt__description {
+  font-family: 'Playfair Display', serif; 
+  font-size: 16px;
+  font-weight: 400;
+  color: #8D9598;
+}
+
+.apt-cards-wrapper {
+  filter: drop-shadow(0px 3px 30px rgba(24, 106, 165, 0.10));
+  border: solid 1px #fdfdfd;
+  border-radius: 25px;
+  padding: 30px 20px;
+}
+
+.apt-select-btn {
+  padding: 10px 100px !important;
+  background-color: #186AA5!important;
+  border-radius: 5px!important;
+  max-width: 250px !important;
+}
+
+
+/* ROW - 3 Featured apartment */
+.mw-big {
+  max-width: 1100px;
+}
+
+.carousel-control {
+  background-color: transparent;
+  border: none;
+  color: #2289FF;
+}
+
+.carousel-control:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+.apt-card {
+  font-family: 'Assistant', sans-serif;
+}
+
+.apt-card__heading {
+  font-size: 17px;
+}
+
+.apt-card__cost {
+  font-family: 'Playfair Display', serif; 
+  font-weight: 700;
+  font-size: 20px;
+  color: #068cec;
+}
+
+.apt-card__location {
+  font-family: 'Playfair Display', serif; 
+  color: #000;
+  font-weight: 700;
+}
+
+.apt-card__description {
+  color: #8D9598;
+}
+
+.apt-card-info-wrap {
+  font-family: 'Assistant', sans-serif;
+  background-color: #E0E7F2;
+  border-radius: 5px;
+  max-width: 17rem;
+}
+
+.apt-card-info-txt {
+  font-size: 13px;
+  letter-spacing: 0.10px;
+  color: #707070;
+}
+
+.carousel-indicator {
+  background-color: #2289FF;
+  border: solid 1px #2289FF;
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+}
+
+.card-img-top__availability,
+.card-img-top__dist {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px;
+  z-index: 100;
+  content: "";
+  top: 10px;
+  height: 30px;
+  width: 80px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.card-img-top__availability {
+  text-transform: uppercase;
+  background-color: #78C720;
+  right: 10px;
+}
+
+.card-img-top__dist {
+  background-color: rgba(112, 112, 112, 0.719);
+  left: 10px;
+}
+
+
+@media only screen and (min-width: 992px){
+  .card:not(:last-child) {
+      margin-right: 15px;
+  }
+}
+
+/* BOOTSTRAP OVERRIDES */
+.carousel-control-next-icon, 
+.carousel-control-prev-icon {
+  width: auto !important;
+  height: auto !important;
+}
+
+.carousel-control-next, 
+.carousel-control-prev {
+  width: auto !important;
+}
+
+.carousel-control-next:focus, 
+.carousel-control-next:hover, 
+.carousel-control-prev:focus, 
+.carousel-control-prev:hover {
+  color: #2289FF;
+  text-decoration: none;
+  opacity: .9;
+}
+
+.carousel-indicators {
+  position: inherit;
+}
+
+.carousel-indicator.active {
+  color: #2289FF;
+  text-decoration: none;
+  opacity: .5;
+}
+
+.carousel-item-next, 
+.carousel-item-prev,
+.carousel-item.active {
+  display: flex!important;
+}
+
+.carousel-item {
+  display: none!important;
+}
+/* BOOTSTRAP OVERRIDES END */
+
+
+/* ROW - 4 Apt Plans */
+/* BOOTSTRAP OVERRIDES */
+.nav-tabs 
+.nav-item.show 
+.nav-link, 
+.nav-tabs 
+.nav-link.active {
+  background-color: transparent;
+}
+
+.fade:not(.show) {
+  opacity: 0 !important;
+  display: none !important;
+}
+
+.fade {
+  transition: all .15s linear !important;
+}
+/* BOOTSTRAP OVERRIDES END */
+
+.apt-plans-wrapper {
+  background-color: #F4F7FA;
+}
+
+.apt-plans-btn {
+  background-color: transparent;
+}
+
+.apt-plans-btn.active {
+  background-color: transparent;
+  text-decoration: underline;
+  color: #068cec !important;
+  border: none;
+  border-radius: 10px;
+}
+
+.mw-xlrg {
+  max-width: 1300px;
+}
+
+.tab-content-bg {
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.studio-left {
+  background-color: #186AA5;
+  font-family: 'Assistant', sans-serif;
+  color: #fff;
+  border-radius: 10px 0 0 10px;
+  max-width: 550px;
+}
+
+.studio-left__title {
+  font-family: 'Playfair Display', serif; 
+  font-size: 33px;
+  font-weight: 700;
+}
+
+.studio-left__description {
+  line-height: 30px;
+  font-size: 15px;
+}
+
+.studio-left__list {
+  line-height: 50px;
+  font-size: 17px;
+}
+
+/* ROW - 5  */
+.mw-xxlrg {
+  max-width: 1450px;
+}
+
+.apt-video-wrapper {
+  /* height: 90vh; */
+  min-height: 565px;
+}
+
+.apt-location-heading {
+  font-family: 'Playfair Display', serif; 
+  font-size: 37px;    
+  font-weight: 700;
+  line-height: 90px;
+}
+
+.dotted-bg {
+  position: absolute;
+  top: 25px;
+  left: 13px;
+
+  max-width: 250px;
+}
+
+.image-bg {
+  position: absolute;
+  top: 55px;
+  right: 10px;
+
+  display: block;
+  max-width: 800px;
+}
+
+.video-bg {
+  position: absolute;
+  top: 275px;
+  left: 15px;
+
+  display: block;
+  max-width: 300px;
+}
+
+.video-player-btn {
+  position: absolute;
+  top: 348px;
+  left: 127px;
+  background-color: #fff;
+  color: #068cec;
+  border-radius: 50%;
+  height: 55px;
+  width: 55px;
+}
+
+@media only screen and (min-width: 768px) {
+  .dotted-bg {
+      top: -36px;
+      left: 111px;
+  }
+  
+  .image-bg {
+      top: 6px;
+      right: 50px;
+  }
+  
+  .video-bg {
+      top: 301px;
+      left: 0;
+  }
+  
+  .video-player-btn {
+      top: 380px;
+      left: 115px;
+  }
+}
+
+/* ROW - 6 */
+.card-title {
+  font-family: 'Assistant', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.apt-amenities-wrapper {
+  background-color: #F4F7FA;
+}
+
+.top-txt__description-blue {
+  font-family: 'Playfair Display', serif; 
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.20px;
+  color: #2289FF;
+  text-decoration: underline;
+}
+
+.amenities-card {
+  max-width: 350px;
+  border-radius: 10px;
+  filter: drop-shadow(0px 3px 15px rgba(24, 106, 165, .10));
+  padding: 30px 10px;
+}
+
+.amenities-card-img-bg {
+  background-color: #F4F7FA;
+  border: 1px solid #F4F7FA;
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+}
+
+.amenities-card-img {
+  display: block;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* ROW - 7 */
+.accordion-item:not(:last-child) {
+  padding-bottom: .55rem;
+}
+
+.custom-accordion-button {
+  font-family: 'Playfair Display', serif; 
+  font-size: 18px;
+  font-weight: 700;
+  color: #14395B;
+  background-color: transparent;
+  border: 1px solid #E8E8E8;
+  border-radius: 15px;
+  box-shadow: 1px 3px 3px rgb(0, 0, 0, 16%);
+}
+
+.custom-accordion-collapse {
+  font-family: 'Assistant', sans-serif;
+  font-size: 17px;
+  color: #8D9598;
+  line-height: 25px;
+}
+
+.accordion-button:not(.collapsed) {
+  color: #14395B !important; 
+  background-color: transparent !important;
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+
+.accordion-item {
+  border: none !important;
+}
+
+.accordion-button::after {
+  position: absolute;
+  right: 10px;
+  top: 10%;
+}
