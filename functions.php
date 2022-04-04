@@ -160,6 +160,7 @@ function colinfeb2022_scripts() {
 		wp_enqueue_style( 'modern-style', '/wp-content/themes/wp-acf-practice-page/css/modern.css' );
 	}
 
+
 	wp_enqueue_script( 'aosjs', '/wp-content/themes/wp-acf-practice-page/vendor/aos/aos.js', array(), '0.0.0', true);
 	wp_enqueue_script( 'bootstrapjs', '/wp-content/themes/wp-acf-practice-page/vendor/bootstrap/js/bootstrap.bundle.min.js', array(), '0.0.0', true);
 	wp_enqueue_script( 'lightboxjs', '/wp-content/themes/wp-acf-practice-page/vendor/glightbox/js/glightbox.min.js', array(), '0.0.0', true);

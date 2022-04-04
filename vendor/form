@@ -1,0 +1,44 @@
+Homepage
+    Form
+        Price
+        location
+        Sq Footage
+        pets allowed
+        parking
+        Submit button
+    on submit -> /apartment-search
+
+Apartment Search
+    URL === /apartment-search/?price=5000&locations=denver&sqft=500&pets=true&parking=true
+        price = 5000
+        loactions = denver
+        sq ft = 500
+        pets = true
+        parking = true
+    Query based on the above
+    output the results of the query
+
+    <?php $price = $_GET['price']; ?>
+    <?php $locations = $_GET['locations']; ?>
+
+    WP_Query(
+
+        apartments with the category of penthouse
+        all apartment
+        apartments added within the last week -> sorted price
+        
+
+        custom field key  => price
+        custom field value => 1000
+
+        custom field key  => pets
+        custom field value => true
+    )
+
+
+    --------------
+    
+        Homepage
+        Rent page
+            table    
+                Filter

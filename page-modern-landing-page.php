@@ -16,10 +16,45 @@
 
 get_header();
 
+$hero_image = get_field('hero_image');
+
+
+// Apartments Query
+$apartments_arg = array(
+    'post_type' => 'apartment',
+);
+$apartments_query = new WP_Query( $apartments_arg );
+
+// Featured Apartments Query
+$featured_apts_1_arg = array(
+	'post_type' => 'apartment_property',
+    'meta_key'     => 'featured',
+    'meta_value'   => true,
+    'posts_per_page' => 3,
+    'orderby' => 'menu_order',
+    'order'   => 'ASC',
+);
+$featured_1_apts = new WP_Query( $featured_apts_1_arg );
+
+// Featured Apartments Query
+$featured_apts_2_arg = array(
+	'post_type' => 'apartment_property',
+    'meta_key'     => 'featured',
+    'meta_value'   => true,
+    'posts_per_page' => 3,
+    'offset'     =>  3,
+    'orderby' => 'menu_order',
+    'order'   => 'ASC',
+);
+$featured_2_apts = new WP_Query( $featured_apts_2_arg );
+
+
 ?>
 
 <section id="hero" class="container-xl pos-relative py-5 px-2">
-    <div class="bg-image"></div>
+    <?php if( !empty( $hero_image ) ): ?>
+        <img class="bg-image" src="<?= esc_url($hero_image['url']); ?>" alt="<?= esc_attr($hero_image['alt']); ?>" />	
+    <?php endif; ?>	
     <div class="heading-wrapper card w-md-25">
         <div class="card-body">
             <h1 class="heading-wrapper__title txt-dark-blue"> <span class="txt-blue"><?php the_field('hero_heading_top'); ?><br></span><?php the_field('hero_heading_bot'); ?></h1>
@@ -58,7 +93,7 @@ get_header();
                     <?php  endwhile; ?>
                 <?php endif; ?>
                 <div class="col-12 col-md-col col-xl-4 py-2 py-md-0 d-xl-flex align-items-center justify-content-center">
-                    <button class="btn btn-link px-0 pr-sm-3">+ Advanced Filter</button>
+                    <button class="btn btn-link px-0 px-sm-3">+ Advanced Filter</button>
                     <button type="submit" class="hero-search-btn btn btn-primary btn-lg">Search</button>
                 </div>
             </div>
@@ -70,44 +105,33 @@ get_header();
     <!-- Row-2 -->
     <section class="apt-select-wrapper container">
         <div class="top-txt-wrapper pt-5 mt-md-5 row">
-            <h2 class="top-txt__heading col-12 text-center p-0 mb-4 mb-md-5">Hi, What do you want to your <br><span class="txt-blue">Dream Apartment</span></h2>
-            <p class="top-txt__description col-12 text-center mb-4 mb-md-5">Select a apartment type below to begin</p>
+            <h2 class="top-txt__heading col-12 text-center p-0 mb-4 mb-md-5"><?php the_field('row-2_heading_top'); ?> <br><span class="txt-blue"><?php the_field('row-2_heading_bot'); ?></span></h2>
+            <p class="top-txt__description col-12 text-center mb-4 mb-md-5"><?php the_field('row-2_subheading'); ?></p>
         </div>
         <div class="row m-0 flex-lg-nowrap">
-            <div class="apt-cards-wrapper col-12 col-md-6 col-lg-3 card mb-4 mx-auto mb-md-3" style="max-width: 250px;">
-                <img src="/assets/apt-card-1.jpg" class="card-img-top" alt="...">
-                <div class="card-body pt-4 pb-0">
-                  <p class="card-text text-center">Deluxe Portion</p>
-                </div>
-            </div>
-            <div class="apt-cards-wrapper col-12 col-md-6 col-lg-3 card mb-4 mx-auto mb-md-3" style="max-width: 250px;">
-                <img src="/assets/apt-card-2.jpg" class="card-img-top" alt="...">
-                <div class="card-body pt-4 pb-0">
-                  <p class="card-text text-center">Double Height</p>
-                </div>
-            </div>
-            <div class="apt-cards-wrapper col-12 col-md-6 col-lg-3 card mb-4 mx-auto mb-md-3" style="max-width: 250px;">
-                <img src="/assets/apt-card-1.jpg" class="card-img-top" alt="...">
-                <div class="card-body pt-4 pb-0">
-                  <p class="card-text text-center">Penthouse</p>
-                </div>
-            </div>
-            <div class="apt-cards-wrapper col-12 col-md-6 col-lg-3 card mb-4 mx-auto mb-md-3" style="max-width: 250px;">
-                <img src="/assets/apt-card-4.jpg" class="card-img-top" alt="...">
-                <div class="card-body pt-4 pb-0">
-                  <p class="card-text text-center">The Studio</p>
-                </div>
-            </div>
+            <?php if ( $apartments_query->have_posts() ) : ?> 
+                <?php while ( $apartments_query->have_posts() ) : $apartments_query->the_post(); ?>
+                    <div class="apt-cards-wrapper col-12 col-md-6 col-lg-3 card mb-4 mx-auto mb-md-3" style="max-width: 250px;">
+                        <a href="<?php the_field('card_link'); ?>">
+                            <img src="<?= esc_url( get_field('card_image') ); ?>" alt="<?php the_title_attribute(); ?> apartment" class="card-img-top">
+                            <div class="card-body pt-4 pb-0">
+                                <p class="card-text text-center"><?php the_field('card_title'); ?></p>
+                            </div>
+                        </a>
+                    </div>
+                <?php endwhile; ?>
+                <?php wp_reset_postdata(); ?>
+            <?php endif; ?>
         </div>
         <div class="row justify-content-center mt-3">
-            <button class="apt-select-btn btn btn-primary">Continue</button>
+            <a class="apt-select-btn btn btn-primary" href="<?php the_field('row-2_continue_btn_link'); ?>"><?php the_field('row-2_continue_btn_text'); ?></a>
         </div>
     </section>
     <!-- Row-3 -->
     <section class="apt-featured-wrapper pb-5">
         <div class="top-txt-wrapper pt-5 mt-md-5 row">
-            <h2 class="top-txt__heading col-12 text-center mb-4 mb-md-5">Featured Apartments</span></h2>
-            <p class="top-txt__description col-12 text-center mb-4 mb-md-5">The Most frequently searched and most popular apartment of the application will be in the list</p>
+            <h2 class="top-txt__heading col-12 text-center mb-4 mb-md-5"><?php the_field('row-3_heading'); ?></span></h2>
+            <p class="top-txt__description col-12 text-center mb-4 mb-md-5"><?php the_field('row-3_subheading'); ?></p>
         </div>
         <div data-bs-interval="false" id="carouselExampleIndicators" class="carousel slide container-fluid mw-big" data-bs-ride="carousel">
             <div class="carousel-inner d-md-flex pb-3">
@@ -115,236 +139,95 @@ get_header();
                     <span class="carousel-control-prev-icon" aria-hidden="true" style="font-size: 2.5rem;">&#x3c;</span>
                 </button>
                 <div class="flex-column flex-lg-row align-items-center justify-content-center carousel-item active">
-                    <div class="card mr-md-2" style="max-width: 18rem;">
-                        <img src="/assets/apt-featured-2.jpg" class="card-img-top" alt="...">
-                        <div class="apt-card card-body">
-                            <p class="card-title apt-card-heading mb-2"><i class="fa fa-map-marker mr-1" style="font-size:25px;color:#FE7847"></i> Knightsbridge</p>
-                            <p class="apt-card__cost mb-0"> <span>&#36;</span> 2,500</p>
-                            <p class="apt-card__location mb-3">Apartment London</p>
-                            <p class="apt-card__description card-text">Beautiful Huge 1 family House in heart of westbury newly Renovated With New Furniture</p>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="apt-card-info-wrap p-1 list-group d-flex flex-row">
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">2 <span class="ml-1" style="color:rgb(54, 54, 54)"> <i class="fa fa-bed"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Bedrooms</p>
+                    <?php if ( $featured_1_apts->have_posts() ) : ?> 
+                        <?php while ( $featured_1_apts->have_posts() ) : $featured_1_apts->the_post(); ?>
+                            <div class="card mr-md-2 <?php the_field('featured_card_class'); ?>" style="max-width: 18rem;">
+                                <img src="<?= esc_url( get_field('featured_image')['url'] ); ?>" alt="<?php the_title_attribute(); ?> apartment" class="card-img-top">
+                                <div class="apt-card card-body">
+                                    <p class="card-title apt-card-heading mb-2"><i class="fa fa-map-marker mr-1" style="font-size:25px;color:#FE7847"></i> <?php the_field('featured_title'); ?></p>
+                                    <p class="apt-card__cost mb-0"> <span>&#36;</span> <?php the_field('featured_price'); ?></p>
+                                    <p class="apt-card__location mb-3"><?php the_field('featured_location'); ?></p>
+                                    <p class="apt-card__description card-text"><?php the_field('featured_description'); ?></p>
                                 </div>
-
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">2 <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-bath"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Bathrooms</p>
-                                </div>
-
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">1776 <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-square-o"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Square Ft</p>
-                                </div>
-                            </div>
-                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio1"><span><i class="fa fa-heart"></i></span></label>
-                              
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio2" autocomplete="off">
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio2">&#43;</label>
-                              
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio3" autocomplete="off">
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio3">&#167;</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mt-5 mt-lg-0 mr-md-2" style="max-width: 18rem;">
-                        <img src="/assets/apt-featured-2.jpg" class="card-img-top" alt="...">
-                        <div class="apt-card card-body">
-                            <p class="card-title apt-card-heading mb-2"><i class="fa fa-map-marker mr-1" style="font-size:25px;color:#FE7847"></i> Knightsbridge</p>
-                            <p class="apt-card__cost mb-0"> <span>&#36;</span> 2,500</p>
-                            <p class="apt-card__location mb-3">Apartment London</p>
-                            <p class="apt-card__description card-text">Beautiful Huge 1 family House in heart of westbury newly Renovated With New Furniture</p>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="apt-card-info-wrap p-1 list-group d-flex flex-row">
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">2 <span class="ml-1" style="color:rgb(54, 54, 54)"> <i class="fa fa-bed"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Bedrooms</p>
-                                </div>
-
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">2 <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-bath"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Bathrooms</p>
-                                </div>
-
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">1776 <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-square-o"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Square Ft</p>
+                                <div class="card-body pt-0">
+                                    <div class="apt-card-info-wrap p-1 list-group d-flex flex-row">
+                                        <div class="d-flex flex-column w-100 justify-content-between">
+                                            <p class="mb-1 txt-blue"><?php the_field('featured_bedrooms'); ?> <span class="ml-1" style="color:rgb(54, 54, 54)"> <i class="fa fa-bed"></i></span> </p>
+                                            <p class="mb-1 apt-card-info-txt">Bedrooms</p>
+                                        </div>
+                                        <div class="d-flex flex-column w-100 justify-content-between">
+                                            <p class="mb-1 txt-blue"><?php the_field('featured_bathrooms'); ?> <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-bath"></i></span> </p>
+                                            <p class="mb-1 apt-card-info-txt">Bathrooms</p>
+                                        </div>
+                                        <div class="d-flex flex-column w-100 justify-content-between">
+                                            <p class="mb-1 txt-blue"><?php the_field('featured_sqft'); ?><span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-square-o"></i></span> </p>
+                                            <p class="mb-1 apt-card-info-txt">Square Ft</p>
+                                        </div>
+                                    </div>
+                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                        <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                                        <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio1"><span><i class="fa fa-heart"></i></span></label>
+                                    
+                                        <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio2" autocomplete="off">
+                                        <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio2">&#43;</label>
+                                    
+                                        <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio3" autocomplete="off">
+                                        <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio3">&#167;</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio1"><span><i class="fa fa-heart"></i></span></label>
-                              
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio2" autocomplete="off">
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio2">&#43;</label>
-                              
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio3" autocomplete="off">
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio3">&#167;</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mt-5 mt-lg-0" style="max-width: 18rem;">
-                        <img src="/assets/apt-featured-2.jpg" class="card-img-top" alt="...">
-                        <div class="apt-card card-body">
-                            <p class="card-title apt-card-heading mb-2"><i class="fa fa-map-marker mr-1" style="font-size:25px;color:#FE7847"></i> Knightsbridge</p>
-                            <p class="apt-card__cost mb-0"> <span>&#36;</span> 2,500</p>
-                            <p class="apt-card__location mb-3">Apartment London</p>
-                            <p class="apt-card__description card-text">Beautiful Huge 1 family House in heart of westbury newly Renovated With New Furniture</p>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="apt-card-info-wrap p-1 list-group d-flex flex-row">
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">2 <span class="ml-1" style="color:rgb(54, 54, 54)"> <i class="fa fa-bed"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Bedrooms</p>
-                                </div>
-
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">2 <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-bath"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Bathrooms</p>
-                                </div>
-
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">1776 <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-square-o"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Square Ft</p>
-                                </div>
-                            </div>
-                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio1"><span><i class="fa fa-heart"></i></span></label>
-                              
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio2" autocomplete="off">
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio2">&#43;</label>
-                              
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio3" autocomplete="off">
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio3">&#167;</label>
-                            </div>
-                        </div>
-                    </div>      
+                        <?php endwhile; ?>
+                        <?php wp_reset_postdata(); ?>
+                    <?php endif; ?>
                 </div>
                 <div class="flex-column flex-lg-row align-items-center justify-content-center carousel-item">
-                    <div class="card mr-md-2" style="max-width: 18rem;">
-                        <img src="/assets/apt-featured-2.jpg" class="card-img-top" alt="...">
-                        <div class="apt-card card-body">
-                            <p class="card-title apt-card-heading mb-2"><i class="fa fa-map-marker mr-1" style="font-size:25px;color:#FE7847"></i> Knightsbridge-2</p>
-                            <p class="apt-card__cost mb-0"> <span>&#36;</span> 2,500</p>
-                            <p class="apt-card__location mb-3">Apartment Knightsbridge-2</p>
-                            <p class="apt-card__description card-text">Beautiful Huge 1 family House in heart of westbury newly Renovated With New Furniture</p>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="apt-card-info-wrap p-1 list-group d-flex flex-row">
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">2 <span class="ml-1" style="color:rgb(54, 54, 54)"> <i class="fa fa-bed"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Bedrooms</p>
+                    <?php if ( $featured_2_apts->have_posts() ) : ?> 
+                        <?php while ( $featured_2_apts->have_posts() ) : $featured_2_apts->the_post(); ?>
+                        <?php $featured_image = get_field('featured_image'); ?>
+                            <div class="card mr-md-2 <?php the_field('featured_card_class'); ?>" style="max-width: 18rem;">
+                                <img src="<?= esc_url( $featured_image['url'] ); ?>" alt="<?php the_title_attribute(); ?> apartment" class="card-img-top">
+                                <div class="apt-card card-body">
+                                    <p class="card-title apt-card-heading mb-2"><i class="fa fa-map-marker mr-1" style="font-size:25px;color:#FE7847"></i> <?php the_field('featured_title'); ?></p>
+                                    <p class="apt-card__cost mb-0"> <span>&#36;</span> <?php the_field('featured_price'); ?></p>
+                                    <p class="apt-card__location mb-3"><?php the_field('featured_location'); ?></p>
+                                    <p class="apt-card__description card-text"><?php the_field('featured_description'); ?></p>
                                 </div>
-
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">2 <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-bath"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Bathrooms</p>
-                                </div>
-
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">1776 <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-square-o"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Square Ft</p>
-                                </div>
-                            </div>
-                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio1"><span><i class="fa fa-heart"></i></span></label>
-                              
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio2" autocomplete="off">
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio2">&#43;</label>
-                              
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio3" autocomplete="off">
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio3">&#167;</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mt-5 mt-lg-0 mr-md-2" style="max-width: 18rem;">
-                        <img src="/assets/apt-featured-2.jpg" class="card-img-top" alt="...">
-                        <div class="apt-card card-body">
-                            <p class="card-title apt-card-heading mb-2"><i class="fa fa-map-marker mr-1" style="font-size:25px;color:#FE7847"></i> Knightsbridge-2</p>
-                            <p class="apt-card__cost mb-0"> <span>&#36;</span> 2,500</p>
-                            <p class="apt-card__location mb-3">Apartment Knightsbridge-2</p>
-                            <p class="apt-card__description card-text">Beautiful Huge 1 family House in heart of westbury newly Renovated With New Furniture</p>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="apt-card-info-wrap p-1 list-group d-flex flex-row">
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">2 <span class="ml-1" style="color:rgb(54, 54, 54)"> <i class="fa fa-bed"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Bedrooms</p>
-                                </div>
-
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">2 <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-bath"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Bathrooms</p>
-                                </div>
-
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">1776 <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-square-o"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Square Ft</p>
+                                <div class="card-body pt-0">
+                                    <div class="apt-card-info-wrap p-1 list-group d-flex flex-row">
+                                        <div class="d-flex flex-column w-100 justify-content-between">
+                                            <p class="mb-1 txt-blue"><?php the_field('featured_bedrooms'); ?> <span class="ml-1" style="color:rgb(54, 54, 54)"> <i class="fa fa-bed"></i></span> </p>
+                                            <p class="mb-1 apt-card-info-txt">Bedrooms</p>
+                                        </div>
+                                        <div class="d-flex flex-column w-100 justify-content-between">
+                                            <p class="mb-1 txt-blue"><?php the_field('featured_bathrooms'); ?> <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-bath"></i></span> </p>
+                                            <p class="mb-1 apt-card-info-txt">Bathrooms</p>
+                                        </div>
+                                        <div class="d-flex flex-column w-100 justify-content-between">
+                                            <p class="mb-1 txt-blue"><?php the_field('featured_sqft'); ?> <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-square-o"></i></span> </p>
+                                            <p class="mb-1 apt-card-info-txt">Square Ft</p>
+                                        </div>
+                                    </div>
+                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                        <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                                        <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio1"><span><i class="fa fa-heart"></i></span></label>
+                                    
+                                        <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio2" autocomplete="off">
+                                        <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio2">&#43;</label>
+                                    
+                                        <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio3" autocomplete="off">
+                                        <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio3">&#167;</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio1"><span><i class="fa fa-heart"></i></span></label>
-                              
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio2" autocomplete="off">
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio2">&#43;</label>
-                              
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio3" autocomplete="off">
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio3">&#167;</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mt-5 mt-lg-0" style="max-width: 18rem;">
-                        <img src="/assets/apt-featured-2.jpg" class="card-img-top" alt="...">
-                        <div class="apt-card card-body">
-                            <p class="card-title apt-card-heading mb-2"><i class="fa fa-map-marker mr-1" style="font-size:25px;color:#FE7847"></i> Knightsbridge-2</p>
-                            <p class="apt-card__cost mb-0"> <span>&#36;</span> 2,500</p>
-                            <p class="apt-card__location mb-3">Apartment Knightsbridge-2</p>
-                            <p class="apt-card__description card-text">Beautiful Huge 1 family House in heart of westbury newly Renovated With New Furniture</p>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="apt-card-info-wrap p-1 list-group d-flex flex-row">
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">2 <span class="ml-1" style="color:rgb(54, 54, 54)"> <i class="fa fa-bed"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Bedrooms</p>
-                                </div>
-
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">2 <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-bath"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Bathrooms</p>
-                                </div>
-
-                                <div class="d-flex flex-column w-100 justify-content-between">
-                                    <p class="mb-1 txt-blue">1776 <span class="ml-1" style="color:rgb(54, 54, 54);"><i class="fa fa-square-o"></i></span> </p>
-                                    <p class="mb-1 apt-card-info-txt">Square Ft</p>
-                                </div>
-                            </div>
-                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio1"><span><i class="fa fa-heart"></i></span></label>
-                              
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio2" autocomplete="off">
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio2">&#43;</label>
-                              
-                                <input type="radio" class="btn-check d-none" name="btnradio" id="btnradio3" autocomplete="off">
-                                <label class="btn btn-outline-primary d-flex align-items-center border-0 mb-0" for="btnradio3">&#167;</label>
-                            </div>
-                        </div>
-                    </div>      
+                        <?php endwhile; ?>
+                        <?php wp_reset_postdata(); ?>
+                    <?php endif; ?>
                 </div>
                 <button class="carousel-control carousel-control-next d-none d-lg-block" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true" style="font-size: 2.5rem;">&#x3e;</span>
                 </button>
             </div>
-            <div class="carousel-indicators d-none d-lg-flex">
+            <div class="carousel-indicators d-none d-lg-flex justify-content-center">
                 <button class="active carousel-indicator mr-2" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"></button>
                 <button class="carousel-indicator" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
             </div>
