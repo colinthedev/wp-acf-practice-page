@@ -210,11 +210,11 @@ $projects_query = new WP_Query( $projects_arg );
 		<div class="container" data-aos="zoom-in">
 			<div class="row">
 				<div class="col-lg-9 text-center text-lg-start">
-				<h3><?php the_field('cta_section_heading'); ?></h3>
-				<p><?php the_field('cta_section_text'); ?></p>
+					<h3><?php the_field('cta_section_heading'); ?></h3>
+					<p><?php the_field('cta_section_text'); ?></p>
 				</div>
 				<div class="col-lg-3 cta-btn-container text-center">
-				<a class="cta-btn align-middle" href="#"><?php the_field('cta_section_button_text'); ?></a>
+					<a class="cta-btn align-middle" href="#"><?php the_field('cta_section_button_text'); ?></a>
 				</div>
 			</div>
 		</div>

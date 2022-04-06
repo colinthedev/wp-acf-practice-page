@@ -17,7 +17,9 @@
 get_header();
 
 $hero_image = get_field('hero_image');
-
+$row_5_dotted_image = get_field('row-5_image_dotted');
+$row_5_big_image = get_field('row-5_image_big');
+$row_5_video_image = get_field('row-5_image_video');
 
 // Apartments Query
 $apartments_arg = array(
@@ -93,7 +95,7 @@ $featured_2_apts = new WP_Query( $featured_apts_2_arg );
                     <?php  endwhile; ?>
                 <?php endif; ?>
                 <div class="col-12 col-md-col col-xl-4 py-2 py-md-0 d-xl-flex align-items-center justify-content-center">
-                    <button class="btn btn-link px-0 px-sm-3">+ Advanced Filter</button>
+                    <a class="btn btn-link px-0 px-sm-3">+ Advanced Filter</a>
                     <button type="submit" class="hero-search-btn btn btn-primary btn-lg">Search</button>
                 </div>
             </div>
@@ -236,7 +238,7 @@ $featured_2_apts = new WP_Query( $featured_apts_2_arg );
     <!-- Row-4 -->
     <section class="apt-plans-wrapper py-5">
         <div class="top-txt-wrapper row">
-            <h2 class="top-txt__heading col-12 text-center mb-4 mb-md-5">Apartment Plans</span></h2>
+            <h2 class="top-txt__heading col-12 text-center mb-4 mb-md-5"><?php the_field('row-4_heading'); ?></span></h2>
         </div>                
         <ul class="row nav nav-tabs mx-auto border-0 pb-4" id="myTab" role="tablist" style="max-width: 550px;">
             <li class="col-12 col-md-4 nav-item" role="presentation">
@@ -306,76 +308,43 @@ $featured_2_apts = new WP_Query( $featured_apts_2_arg );
     <section class="apt-video-wrapper mt-5 mx-auto mw-xxlrg">
         <div class="row">
             <div class="col-12 col-lg-4 text-center text-lg-left pb-5 pb-lg-0 pl-0 pl-lg-5">
-                <h4 class="apt-location-heading pt-3 pt-lg-5">Buy <br>Dream Apartment<br> In <span class="txt-blue">Prime Location</span></h4>
-                <button class="btn btn-primary mt-4 py-3 px-4">See All Apartments</button>
+                <h4 class="apt-location-heading pt-3 pt-lg-5"><?php the_field('row-5_heading--1'); ?> <br><?php the_field('row-5_heading--2'); ?><br> <?php the_field('row-5_heading--3'); ?> <span class="txt-blue"><?php the_field('row-5_heading--4'); ?></span></h4>
+                <a href="<?php the_field('row-5_button_main_link'); ?>" role="button" class="btn btn-primary mt-4 py-3 px-4"><?php the_field('row-5_button_main_text'); ?></a>
             </div>
             <div class="col-12 col-lg-8 position-relative" style="height:450px">
-                <img class="dotted-bg w-50" src="/assets/dotted-bg.jpg" alt="">
-                <img class="image-bg mx-auto mx-lg-0 w-75"src="/assets/image-bg.jpg" alt="">
-                <img class="video-bg mx-auto mx-lg-0 w-75" src="/assets/video-bg.jpg" alt="">
-                <button class="btn video-player-btn">&#x276F;</button>
+                <img class="dotted-bg w-50" src="<?= esc_url( $row_5_dotted_image['url'] ); ?>" alt="<?= esc_attr( $row_5_dotted_image['alt'] ); ?>">
+                <img class="image-bg mx-auto mx-lg-0 w-75" src="<?= esc_url( $row_5_big_image['url'] ); ?>" alt="<?= esc_attr( $row_5_big_image['alt'] ); ?>">
+                <img class="video-bg mx-auto mx-lg-0 w-75"  src="<?= esc_url( $row_5_video_image['url'] ); ?>" alt="<?= esc_attr( $row_5_video_image['alt'] ); ?>">
+                <a href="<?php the_field('row-5_video_button_link'); ?>" target="_blank" role="button" class="btn video-player-btn d-flex justify-content-center align-items-center">&#x276F;</a>
             </div>
         </div>
     </section>
     <!-- ROW - 6 -->
     <section class="apt-amenities-wrapper">
         <div class="top-txt-wrapper pt-5 mt-md-5 row">
-            <p class="top-txt__description-blue col-12 text-center mb-2">Apartments</p>
-            <h2 class="top-txt__heading col-12 text-center mb-4 mb-md-5">Featured Listings</span></h2>
+            <p class="top-txt__description-blue col-12 text-center mb-2"><?php the_field('row-6_heading_top'); ?></p>
+            <h2 class="top-txt__heading col-12 text-center mb-4 mb-md-5"><?php the_field('row-6_heading_bottom'); ?></span></h2>
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-            <div class="col-12 col-md-3">
-              <div class="card h-100">
-                <div class="card-img-bg d-flex align-items-center mx-auto">
-                    <img src="/assets/car.jpg" class="amenities-card-img card-img-top" alt="...">
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title text-center">Parking Space</h5>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-md-3">
-                <div class="card h-100">
-                  <div class="card-img-bg d-flex align-items-center mx-auto">
-                      <img src="/assets/car.jpg" class="amenities-card-img card-img-top" alt="...">
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title text-center">Parking Space</h5>
-                  </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-3">
-                <div class="card h-100">
-                  <div class="card-img-bg d-flex align-items-center mx-auto">
-                      <img src="/assets/car.jpg" class="amenities-card-img card-img-top" alt="...">
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title text-center">Parking Space</h5>
-                  </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-3">
-                <div class="card h-100">
-                  <div class="card-img-bg d-flex align-items-center mx-auto">
-                      <img src="/assets/car.jpg" class="amenities-card-img card-img-top" alt="...">
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title text-center">Parking Space</h5>
-                  </div>
-                </div>
-            </div>
-
-            <img src="/assets/swimming-pool.jpg" class="amenities-card-img card-img-top" alt="...">
-            <img src="/assets/surface1.jpg" class="amenities-card-img card-img-top" alt="...">
-            <img src="/assets/stethoscope.jpg" class="amenities-card-img card-img-top" alt="...">
-            <img src="/assets/bookshelf.jpg" class="amenities-card-img card-img-top" alt="...">
-            <img src="/assets/bed.jpg" class="amenities-card-img card-img-top" alt="...">
-            <img src="/assets/home.jpg" class="amenities-card-img card-img-top" alt="...">
-            <img src="/assets/XMLID_313_.jpg" class="amenities-card-img card-img-top" alt="...">
-
-          </div>
+            <?php if(have_rows('row-6_listings')): ?>
+                <?php while( have_rows('row-6_listings')) : the_row(); ?>
+                <?php $row_6_card_image = get_sub_field('featured_card_image'); ?>
+                    <div class="col-12 col-md-3">
+                        <div class="card h-100">
+                            <div class="card-img-bg d-flex align-items-center mx-auto">
+                                <img class="amenities-card-img card-img-top" src="<?php echo $row_6_card_image['url']; ?>" alt="<?php echo $row_6_card_image['alt']; ?>">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title text-center"><?php the_sub_field('card_title'); ?></h5>
+                            </div>
+                        </div>
+                    </div>
+                <?php  endwhile; ?>
+            <?php endif; ?>
+        </div>
     </section>
 </main>
+
 
 <?php
 get_footer();
